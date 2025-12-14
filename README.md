@@ -19,7 +19,5 @@ Backend: Node.js, Express
 Frontend: HTML, CSS, JavaScript
 APIs: GitHub REST API
 
-Built by Niranjana B
-
 
 Built by Niranjana B
