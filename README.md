@@ -19,5 +19,11 @@ Backend: Node.js, Express
 Frontend: HTML, CSS, JavaScript
 APIs: GitHub REST API
 
+Future Enhancements
 
-Built by Niranjana B
+•  Better commit and activity insights
+•  Test and CI/CD detection
+•  Improved project structure evaluation
+•  Repository comparison and ranking
+
+Built by ✨Niranjana✨
