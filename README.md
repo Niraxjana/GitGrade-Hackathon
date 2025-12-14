@@ -7,17 +7,17 @@ It evaluates repositories across multiple dimensions such as project structure, 
 🔗 Live Demo: https://gitstats-g7ae.onrender.com/
 
 What GitStats Provides:
- 📊 Overall repository evaluation and quality assessment
- 🔁 Analysis of commit history and development consistency
- 🗂️ Insights into project structure and technology stack
- 📝 Documentation presence and clarity checks
- 🧭 Personalized improvement roadmap based on repository gaps
- 📈 Visual insights to understand contribution patterns
+ ~📊 Overall repository evaluation and quality assessment
+ ~🔁 Analysis of commit history and development consistency
+ ~🗂️ Insights into project structure and technology stack
+ ~📝 Documentation presence and clarity checks
+ ~🧭 Personalized improvement roadmap based on repository gaps
+ ~📈 Visual insights to understand contribution patterns
 
 Tech Stack:
-Backend: Node.js, Express
-Frontend: HTML, CSS, JavaScript
-APIs: GitHub REST API
+>Backend: Node.js, Express
+>Frontend: HTML, CSS, JavaScript
+>APIs: GitHub REST API
 
 Future Enhancements
 
@@ -27,3 +27,5 @@ Future Enhancements
 •  Repository comparison and ranking
 
 Built by ✨Niranjana✨
+<img width="1366" height="624" alt="image" src="https://github.com/user-attachments/assets/8c9e81be-56df-4e08-b709-74b033ed9d85" />
+
