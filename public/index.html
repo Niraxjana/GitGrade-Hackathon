@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Repo Analyzer</title>
+    <style>
+        /* ====== GLOBAL ====== */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* ====== INPUT ====== */
+        .input-section {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* ====== CARDS ====== */
+        .score-card, .summary-card, .roadmap-card, .chart-card {
+            background: #f9f9f9;
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .score-card p {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .roadmap-card ul {
+            list-style: disc inside;
+            padding-left: 0;
+        }
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>GitHub Repo Analyzer</h1>
+        
+        <div class="input-section">
+            <input type="text" id="repoUrl" placeholder="Paste GitHub repository URL">
+            <button id="analyzeBtn">Analyze Repo</button>
+        </div>
+
+        <div id="loading" class="hidden">Analyzing repository...</div>
+
+        <div id="results" class="hidden">
+            <div class="score-card">
+                <h2>Repo Score</h2>
+                <p id="score">0 / 100</p>
+            </div>
+
+            <div class="summary-card">
+                <h2>Repo Summary</h2>
+                <p id="summary"></p>
+            </div>
+
+            <div class="roadmap-card">
+                <h2>Improvement Roadmap</h2>
+                <ul id="roadmap"></ul>
+            </div>
+
+            <div class="chart-card">
+                <h2>Commit Consistency</h2>
+                <canvas id="commitChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const resultsDiv = document.getElementById("results");
+const analyzeBtn = document.getElementById("analyzeBtn");
+const repoUrlInput = document.getElementById("repoUrl");
+
+analyzeBtn.addEventListener("click", async () => {
+  const repoUrl = repoUrlInput.value.trim();
+  if (!repoUrl) {
+    alert("Please enter a GitHub repository URL");
+    return;
+  }
+
+  // Show loading
+  resultsDiv.classList.remove("hidden");
+  resultsDiv.innerHTML = "<p>Analyzing repository...</p>";
+
+  try {
+    const response = await fetch("http://localhost:5000/api/analyze", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ repoUrl })
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch repository analysis");
+    }
+
+    const data = await response.json();
+
+    resultsDiv.innerHTML = `
+      <div class="score-card">
+        <h2>Repo Score</h2>
+        <p>${data.analysis.score} / 100</p>
+      </div>
+
+      <div class="summary-card">
+        <h2>Repo Summary</h2>
+        <p>Total Files: ${data.stats.totalFiles}<br>
+           Total Commits: ${data.stats.totalCommits}<br>
+           Languages: ${data.stats.languages.join(", ")}<br>
+           Has README: ${data.stats.hasReadme ? "Yes" : "No"}
+        </p>
+      </div>
+
+      <div class="roadmap-card">
+        <h2>Improvement Roadmap</h2>
+        <ul>
+          <li>Example: Add more commits regularly</li>
+          <li>Example: Improve README</li>
+        </ul>
+      </div>
+    `;
+
+  } catch (error) {
+    resultsDiv.innerHTML = `<p style="color:red">${error.message}</p>`;
+  }
+});
+
+
+</script>
+
+</body>
+</html>
